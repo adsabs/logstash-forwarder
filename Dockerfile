@@ -24,9 +24,9 @@ WORKDIR /logstash-forwarder
 COPY resources/logstash-forwarder.conf /logstash-forwarder/logstash-forwarder.conf
 COPY resources/logstash-forwarder.key /logstash-forwarder/logstash-forwarder.key
 COPY resources/logstash-forwarder.crt /logstash-forwarder/logstash-forwarder.crt
-
+COPY resources/logstash-forwarder.sh /etc/service/logstash-forwarder/run
 
 # How the docker container is interacted with
 ##
-ENTRYPOINT ["/opt/logstash-forwarder/logstash-forwarder"]
-CMD ["-config", "/logstash-forwarder/logstash-forwarder.conf", ">> /var/log/logstash-forwarder.log", "2>> /var/log/logstash-forwarder.log"]
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+CMD ["/sbin/my_init"]
